@@ -23,5 +23,8 @@ export default antfu({
       case: "kebabCase",
       ignore: ["README.md"],
     }],
+    "n/no-process-env": ["error", {
+      allowedVariables: ["NODE_ENV"],
+    }],
   },
 });
