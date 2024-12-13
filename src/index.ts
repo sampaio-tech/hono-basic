@@ -1,9 +1,12 @@
-import { Hono } from "hono";
+import { serve } from "bun";
 
-const app = new Hono();
+import app from "./app";
 
-app.get("/", (c) => {
-  return c.text("Hello Hono!");
-});
+const port = 3001;
 
-export default app;
+// eslint-disable-next-line no-console
+console.log(`Started server http://localhost:${port}`);
+
+serve(
+  { fetch: app.fetch, port },
+);
