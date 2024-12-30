@@ -1,14 +1,13 @@
-import type { PinoLogger } from "hono-pino";
-
-import { OpenAPIHono } from "@hono/zod-openapi";
-import { notFound, onError, serveEmojiFavicon } from "stoker/middlewares";
-
+import configureOpenAPI from "./lib/configure-open-api";
 import createApp from "./lib/create-app";
-import { logger } from "./middlewares/pino";
+import index from "./routes/index.route";
+import tasks from "./routes/tasks/tasks.index";
 
 const app = createApp();
-app.get("/hello", (c) => {
-  return c.text("Hello Hono!");
-});
-
+const routes = [
+  index,
+  tasks,
+];
+configureOpenAPI(app);
+routes.forEach(route => app.route("/", route));
 export default app;
