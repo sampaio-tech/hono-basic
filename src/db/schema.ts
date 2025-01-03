@@ -1,6 +1,8 @@
 import { boolean, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
+import { oneOf } from "@/lib/constants";
+
 export const tasks = pgTable("tasks", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
@@ -10,6 +12,7 @@ export const tasks = pgTable("tasks", {
 });
 
 export const selectTasksSchema = createSelectSchema(tasks);
+
 export const insertTasksSchema = createInsertSchema(tasks, {
   name: schema => schema.nonempty(),
 }).required({
@@ -20,3 +23,5 @@ export const insertTasksSchema = createInsertSchema(tasks, {
   createdAt: true,
   updatedAt: true,
 });
+
+export const patchTasksSchema = insertTasksSchema.partial().superRefine(oneOf("name", "done"));
