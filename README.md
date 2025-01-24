@@ -10,4 +10,10 @@ To run:
 bun run dev
 ```
 
+To run docker compose:
+
+```sh
+docker compose up
+```
+
 open http://localhost:3000
